@@ -2,7 +2,11 @@
 //  QuestionFactoryDelegate.swift
 //  MovieQuiz
 //
-//  Created by Татьяна Каданцева on 27.01.2026.
-//
+//Протокол "получил ли следующий вопрос"
 
 import Foundation
+
+protocol QuestionFactoryDelegate: AnyObject {
+	func didReceiveNextQuestion(question: QuizQuestion?)
+}
+
