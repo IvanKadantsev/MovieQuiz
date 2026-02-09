@@ -1,9 +1,4 @@
-//
-//  StatisticService.swift
-//  MovieQuiz
-//
 import Foundation
-
 
 final class StatisticService: StatisticServiceProtocol {
 

@@ -1,7 +1,3 @@
-//
-//  GameResult.swift
-//  MovieQuiz
-
 import Foundation
 
 struct GameResult {

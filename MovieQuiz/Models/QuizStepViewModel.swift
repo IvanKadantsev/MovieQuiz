@@ -1,8 +1,3 @@
-//
-//  QuizStepViewModel.swift
-//  MovieQuiz
-//
-
 import UIKit
 
 struct QuizStepViewModel {

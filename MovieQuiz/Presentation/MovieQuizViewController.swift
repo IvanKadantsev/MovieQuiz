@@ -3,14 +3,16 @@ import UIKit
 final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 	// MARK: - Lifecycle
 	
-	private var currentQuestionIndex: Int = 0
-	private var correctAnswer = 0
-
 	
 	@IBOutlet private var imageView: UIImageView!
 	@IBOutlet private var textLabel: UILabel!
 	@IBOutlet private var counterLabel: UILabel!
+	@IBOutlet weak var noButton: UIButton!
+	@IBOutlet weak var yesButton: UIButton!
 	
+	private var currentQuestionIndex: Int = 0
+	private var correctAnswer = 0
+
 	private let questionsAmount: Int = 10
 	private var questionFactory: QuestionFactoryProtocol
 	private var currentQuestion: QuizQuestion?
@@ -80,9 +82,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 		let givenAnswer = false
 		showAnswerResult(isCorrect: givenAnswer == currentQuestion?.correctAnswer)
 	}
-	
-	@IBOutlet weak var noButton: UIButton!
-	
+		
 	@IBAction private func yesButtonClicked(_ sender: UIButton) {
 		print(currentQuestionIndex, questionsAmount, correctAnswer)
 		guard currentQuestionIndex != questionsAmount else {
@@ -91,9 +91,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 		let givenAnswer = true
 		showAnswerResult(isCorrect: givenAnswer == currentQuestion?.correctAnswer)
 	}
-	
-	@IBOutlet weak var yesButton: UIButton!
-	
+		
 	private func showAnswerResult(isCorrect: Bool) {
 		if isCorrect {correctAnswer += 1}
 		presenter.updateCorrectAnswer(count: correctAnswer)
@@ -112,13 +110,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 		
 	}
 	
-	
-	
 	private func showNextQuestionOrResult() {
 		if currentQuestionIndex == questionsAmount - 1 {
-//			let text = correctAnswer == questionsAmount ?
-//			"Поздравляем, вы ответили на 10 из 10!" :
-//			"Вы ответили на \(correctAnswer) из 10, попробуйте еще раз!"
 			let viewModel = QuizResultsViewModel(
 				title: "Этот раунд окончен!",
 				text: "",
@@ -136,7 +129,10 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 	
 	private func show(quiz result: QuizResultsViewModel) {
 		let message = presenter.makeResultsMessage()
-		let model = AlertModel(title: result.title, message: message, buttonText: result.buttonText) { [weak self] in
+		let model = AlertModel(
+			title: result.title,
+			message: message,
+			buttonText: result.buttonText) { [weak self] in
 			guard let self = self else {return}
 			self.presenter.restartGame()
 			self.questionFactory.reset()
@@ -148,15 +144,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 	}
 
 }
-	
-	
-
-	
-	
-
-	
-	
-	
 	
 
 /*

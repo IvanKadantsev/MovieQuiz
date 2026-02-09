@@ -1,12 +1,4 @@
-//
-//  QuizRezultPresenter.swift
-//  MovieQuiz
-//
-//  Created by Татьяна Каданцева on 03.02.2026.
-//
-
-
-class QuizResultPresenter: QuizResultProtocol {
+final class QuizResultPresenter: QuizResultProtocol {
 	func updateCorrectAnswer(count: Int) {
 		self.correctAnswer = count
 	}
@@ -23,11 +15,8 @@ class QuizResultPresenter: QuizResultProtocol {
 		let statisticService = StatisticService()
 		let text = "Ваш результат: \(correctAnswer)/\(questionsAmount)\n" +
 		"Количество сыграных квизов: \(statisticService.gamesCount)\n" +
-		"Рекорд: \(statisticService.bestGame.correct)/10 \(statisticService.bestGame.date.dateTimeString)\n" +
+		"Рекорд: \(statisticService.bestGame.correct)/10 (\(statisticService.bestGame.date.dateTimeString))\n" +
 		"Средняя точность: \(String(format: "%.2f", statisticService.totalAccuracy))%"
-	
-		
-
 		return text
 	}
 
@@ -37,4 +26,3 @@ class QuizResultPresenter: QuizResultProtocol {
 	}
 
 }
-//

@@ -1,8 +1,3 @@
-//
-//  StatisticServiceProtocol.swift
-//  MovieQuiz
-//
-
 protocol StatisticServiceProtocol {
 	var gamesCount: Int { get }
 	var bestGame: GameResult { get }
@@ -10,6 +5,3 @@ protocol StatisticServiceProtocol {
 	
 	func store(correct count: Int, total amount: Int)
 }
-
-
-
