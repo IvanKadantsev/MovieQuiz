@@ -9,12 +9,17 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 	@IBOutlet private var counterLabel: UILabel!
 	@IBOutlet weak var noButton: UIButton!
 	@IBOutlet weak var yesButton: UIButton!
+	@IBOutlet private var activityIndicator: UIActivityIndicatorView!
 	
 	private var currentQuestionIndex: Int = 0
 	private var correctAnswer = 0
 
 	private let questionsAmount: Int = 10
-	private var questionFactory: QuestionFactoryProtocol
+	private lazy var questionFactory: QuestionFactoryProtocol = {
+		return QuestionFactory(
+			moviesLoader: MoviesLoader(),
+			delegate: self)
+	} ()
 	private var currentQuestion: QuizQuestion?
 	
 	private var alertPresenter = AlertPresenter()
@@ -24,28 +29,70 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 	
 	init(
 		presenter: QuizResultProtocol,
-		questionFactory: QuestionFactoryProtocol
+//		questionFactory: QuestionFactoryProtocol
 	) {
 		self.presenter = presenter
-		self.questionFactory = questionFactory
+//		self.questionFactory = questionFactory
 		super.init(nibName: nil, bundle: nil)
 	}
 	
 	required init?(coder: NSCoder) {
 		let presenter = QuizResultPresenter(correctAnswer: 0, questionsAmount: 10)
-		let factory = QuestionFactory()
+//		let factory = QuestionFactory(
+//			moviesLoader: MoviesLoader(),
+//			delegate: self
+//		)
 		self.presenter = presenter
-		self.questionFactory = factory
+//		self.questionFactory = factory
 		super.init(coder: coder)
 	}
 
 	override func viewDidLoad() {
-		super.viewDidLoad()
-		let questionFactory = QuestionFactory()
-		questionFactory.setup(delegate: self)
-		self.questionFactory = questionFactory
+//		super.viewDidLoad()
+//		let questionFactory = QuestionFactory()
+//		questionFactory.setup(delegate: self)
+//		self.questionFactory = questionFactory
+//		questionFactory.requestNextQuestion()
+//		statisticService = StatisticService()
+//		
+
+			super.viewDidLoad()
+		   
+		   imageView.layer.cornerRadius = 20
+//			questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
+			statisticService = StatisticService()
+
+			showLoadingIndicator()
+			questionFactory.loadData()
+		
+	}
+	
+	private func showLoadingIndicator() {
+		activityIndicator.isHidden = false
+		activityIndicator.startAnimating()
+	}
+
+	private func showNetworkError(message: String) {
+		showLoadingIndicator()
+		
+		let model = AlertModel(title: "Ошибка",
+								message: message,
+								buttonText: "Попробовать еще раз") { [weak self] in
+			guard let self = self else {return}
+			
+			self.currentQuestionIndex = 0
+			self.correctAnswer = 0
+		}
+		alertPresenter.show(in: self, model: model)
+	}
+	
+	func didLoadDataFromServer() {
+		activityIndicator.isHidden = true
 		questionFactory.requestNextQuestion()
-		statisticService = StatisticService()
+	}
+	
+	func didFailToLoadData(with error: Error) {
+		showNetworkError(message: error.localizedDescription)
 	}
 
 	func didReceiveNextQuestion(question: QuizQuestion?) {
@@ -59,12 +106,19 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 		}
 	}
 	
+//	private func convert(model: QuizQuestion) -> QuizStepViewModel {
+//		let questionStep = QuizStepViewModel(
+//			image: UIImage(named: model.image) ?? UIImage(),
+//			question: model.text,
+//			questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)")
+//		return questionStep
+//	}
+	
 	private func convert(model: QuizQuestion) -> QuizStepViewModel {
-		let questionStep = QuizStepViewModel(
-			image: UIImage(named: model.image) ?? UIImage(),
+		return QuizStepViewModel(
+			image: UIImage(data: model.image) ?? UIImage(),
 			question: model.text,
 			questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)")
-		return questionStep
 	}
 	
 	private func show(quiz step: QuizStepViewModel) {
@@ -139,8 +193,17 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 			self.correctAnswer = 0
 			self.currentQuestionIndex = 0
 			self.questionFactory.requestNextQuestion()
+			self.startNewGame()
+				
 		}
 		alertPresenter.show(in: self, model: model)
+	}
+	
+	private func startNewGame() {
+		questionFactory.reset()
+		correctAnswer = 0
+		currentQuestionIndex = 0
+		questionFactory.loadData()
 	}
 
 }
