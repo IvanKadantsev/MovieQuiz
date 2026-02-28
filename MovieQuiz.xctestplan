@@ -21,27 +21,6 @@
     {
       "target" : {
         "containerPath" : "container:MovieQuiz.xcodeproj",
-        "identifier" : "4BBFC6752F50B4B000E5A100",
-        "name" : "MovieQuizTest"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:MovieQuiz.xcodeproj",
-        "identifier" : "4BA4C6162F50C5B900B6AE72",
-        "name" : "ArraTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:MovieQuiz.xcodeproj",
-        "identifier" : "4BBFC6682F50B37500E5A100",
-        "name" : "MovieQuizTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:MovieQuiz.xcodeproj",
         "identifier" : "4BC9E0222F52D8F600D39DBC",
         "name" : "MovieQuizUITests"
       }
