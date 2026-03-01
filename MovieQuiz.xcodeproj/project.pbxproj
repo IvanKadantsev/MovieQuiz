@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B20B8422F5434CD00B60E40 /* MovieQuizPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B20B8412F5434B900B60E40 /* MovieQuizPresenter.swift */; };
 		4B9052F22EFB0AAA003C1501 /* YS Display-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4B9052F12EFB0AAA003C1501 /* YS Display-Medium.ttf */; };
 		4B9052F32EFB0AAA003C1501 /* YS Display-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4B9052F02EFB0AAA003C1501 /* YS Display-Bold.ttf */; };
 		4BACAE3D2F22996D009A9EF6 /* QuestionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BACAE3C2F22996D009A9EF6 /* QuestionFactory.swift */; };
@@ -67,6 +68,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4B20B8412F5434B900B60E40 /* MovieQuizPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieQuizPresenter.swift; sourceTree = "<group>"; };
 		4B9052F02EFB0AAA003C1501 /* YS Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Bold.ttf"; sourceTree = "<group>"; };
 		4B9052F12EFB0AAA003C1501 /* YS Display-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Medium.ttf"; sourceTree = "<group>"; };
 		4BA4C6172F50C5B900B6AE72 /* ArraTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArraTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -185,8 +187,9 @@
 		8F4738322848DE2A005DF65E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				4BACAE4B2F2FD40B009A9EF6 /* AlertPresenter.swift */,
+				4B20B8412F5434B900B60E40 /* MovieQuizPresenter.swift */,
 				AD1ABAB52831907B00B3E448 /* MovieQuizViewController.swift */,
+				4BACAE4B2F2FD40B009A9EF6 /* AlertPresenter.swift */,
 				4BACAE4D2F31C333009A9EF6 /* QuizRezultPresenter.swift */,
 				AD1ABAB72831907B00B3E448 /* Main.storyboard */,
 			);
@@ -488,6 +491,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B20B8422F5434CD00B60E40 /* MovieQuizPresenter.swift in Sources */,
 				4BBFC6602F4CCC2800E5A100 /* NetworkClient.swift in Sources */,
 				4BACAE4E2F31C333009A9EF6 /* QuizRezultPresenter.swift in Sources */,
 				AD5EE5DE284D7887003966EF /* UIColor+Extensions.swift in Sources */,
