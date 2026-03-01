@@ -43,14 +43,13 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 	}
 
 	override func viewDidLoad() {
-			super.viewDidLoad()
-		   
-		   imageView.layer.cornerRadius = 20
+		super.viewDidLoad()
 
-			statisticService = StatisticService()
-
-			showLoadingIndicator()
-			questionFactory.loadData()
+		presenter.viewController = self
+		imageView.layer.cornerRadius = 20
+		statisticService = StatisticService()
+		showLoadingIndicator()
+		questionFactory.loadData()
 		
 	}
 	
@@ -102,24 +101,16 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 	}
 	
 	@IBAction private func noButtonClicked(_ sender: UIButton) {
-//		print(currentQuestionIndex, questionsAmount, correctAnswer)
-		guard presenter.isLartQuestion() else {
-			return
-		}
-		let givenAnswer = false
-		showAnswerResult(isCorrect: givenAnswer == currentQuestion?.correctAnswer)
+		presenter.currentQuestion = currentQuestion
+		presenter.noButtonClicked()
 	}
 		
 	@IBAction private func yesButtonClicked(_ sender: UIButton) {
-//		print(currentQuestionIndex, questionsAmount, correctAnswer)
-		guard presenter.isLartQuestion() else {
-			return
-		}
-		let givenAnswer = true
-		showAnswerResult(isCorrect: givenAnswer == currentQuestion?.correctAnswer)
+		presenter.currentQuestion = currentQuestion
+		presenter.yesButtonClicked()
 	}
 		
-	private func showAnswerResult(isCorrect: Bool) {
+	func showAnswerResult(isCorrect: Bool) {
 		if isCorrect {correctAnswer += 1}
 		quizResultPresenter.updateCorrectAnswer(count: correctAnswer)
 		imageView.layer.masksToBounds = true
@@ -138,7 +129,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 	}
 	
 	private func showNextQuestionOrResult() {
-		if presenter.isLartQuestion() {
+		if presenter.isLastQuestion() {
 			let viewModel = QuizResultsViewModel(
 				title: "Этот раунд окончен!",
 				text: "",
