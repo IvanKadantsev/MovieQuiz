@@ -29,37 +29,22 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 	
 	init(
 		presenter: QuizResultProtocol,
-//		questionFactory: QuestionFactoryProtocol
 	) {
 		self.presenter = presenter
-//		self.questionFactory = questionFactory
 		super.init(nibName: nil, bundle: nil)
 	}
 	
 	required init?(coder: NSCoder) {
 		let presenter = QuizResultPresenter(correctAnswer: 0, questionsAmount: 10)
-//		let factory = QuestionFactory(
-//			moviesLoader: MoviesLoader(),
-//			delegate: self
-//		)
 		self.presenter = presenter
-//		self.questionFactory = factory
 		super.init(coder: coder)
 	}
 
 	override func viewDidLoad() {
-//		super.viewDidLoad()
-//		let questionFactory = QuestionFactory()
-//		questionFactory.setup(delegate: self)
-//		self.questionFactory = questionFactory
-//		questionFactory.requestNextQuestion()
-//		statisticService = StatisticService()
-//		
-
 			super.viewDidLoad()
 		   
 		   imageView.layer.cornerRadius = 20
-//			questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
+
 			statisticService = StatisticService()
 
 			showLoadingIndicator()
@@ -106,14 +91,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 		}
 	}
 	
-//	private func convert(model: QuizQuestion) -> QuizStepViewModel {
-//		let questionStep = QuizStepViewModel(
-//			image: UIImage(named: model.image) ?? UIImage(),
-//			question: model.text,
-//			questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)")
-//		return questionStep
-//	}
-	
 	private func convert(model: QuizQuestion) -> QuizStepViewModel {
 		return QuizStepViewModel(
 			image: UIImage(data: model.image) ?? UIImage(),
@@ -129,7 +106,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 	}
 	
 	@IBAction private func noButtonClicked(_ sender: UIButton) {
-		print(currentQuestionIndex, questionsAmount, correctAnswer)
+//		print(currentQuestionIndex, questionsAmount, correctAnswer)
 		guard currentQuestionIndex != questionsAmount else {
 			return
 		}
@@ -138,7 +115,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
 	}
 		
 	@IBAction private func yesButtonClicked(_ sender: UIButton) {
-		print(currentQuestionIndex, questionsAmount, correctAnswer)
+//		print(currentQuestionIndex, questionsAmount, correctAnswer)
 		guard currentQuestionIndex != questionsAmount else {
 			return
 		}

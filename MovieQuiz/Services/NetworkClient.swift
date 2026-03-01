@@ -9,7 +9,7 @@ struct NetworkClient: NetworkRouting {
 		case codeError
 	}
 
-	func fetch(url: URL, handler: @escaping (Result<Data, Error>) -> Void) /*-> URLSessionDataTask*/ {
+	func fetch(url: URL, handler: @escaping (Result<Data, Error>) -> Void)  {
 		let request = URLRequest(url: url)
 
 		let task = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -27,9 +27,7 @@ struct NetworkClient: NetworkRouting {
 			guard let data = data else { return }
 				handler(.success(data))
 				return
-//				handler(.success(data))
 			}
 			task.resume()
-//		return task  // Добавляем return task — это исправляет ошибку
 	}
 }

@@ -1,10 +1,6 @@
-//
-//  ArrayTests.swift
-//  MovieQuiz
-//
+
 import Foundation
 import XCTest
-//@Testable import MovieQuiz
 
 class ArrayTests: XCTestCase {
 	func testGetValueInRange() throws {
