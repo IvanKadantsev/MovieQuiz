@@ -15,18 +15,11 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
 	var questionFactory: QuestionFactoryProtocol?
 	var correctAnswers: Int = 0
 	
-//	init(viewController: MovieQuizViewController) {
-//		self.viewController = viewController
-//		
-//		questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
-//		questionFactory?.loadData()
-//		viewController.showLoadingIndicator()
-//	}
+
 	init(viewController: MovieQuizViewController) {
 		self.viewController = viewController
 		questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
 		questionFactory?.loadData()
-		// Безопасный вызов — не вызовет краш, если viewController не готов
 		viewController.showLoadingIndicator()
 	}
 	

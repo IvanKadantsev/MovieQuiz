@@ -32,16 +32,6 @@ class MovieQuizViewController: UIViewController, MovieQuizControllerProtocol {
 		super.init(coder: coder)
 	}
 
-//	override func viewDidLoad() {
-//		super.viewDidLoad()
-//		
-//		presenter = MovieQuizPresenter(viewController: self)
-////		presenter.viewController = self
-//		imageView.layer.cornerRadius = 20
-//		statisticService = StatisticService()
-//		showLoadingIndicator()
-//	}
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		print("MovieQuizViewController: viewDidLoad called")
