@@ -1,8 +1,3 @@
-//
-//  MovieQuizUITests.swift
-//  MovieQuizUITests
-
-
 import XCTest
 
 final class MovieQuizUITests: XCTestCase {
@@ -22,32 +17,18 @@ final class MovieQuizUITests: XCTestCase {
 
     override func tearDownWithError() throws {
 		try super.tearDownWithError()
-		
-//		app.terminate()
 		app = nil
     }
 	
-//	func testScreenCast() throws {
-//		let app = XCUIApplication()
-//
-//		app.activate()
-//		app/*@START_MENU_TOKEN@*/.buttons["Да"]/*[[".buttons.containing(.staticText, identifier: \"Да\")",".otherElements.buttons[\"Да\"]",".buttons[\"Да\"]"],[[[-1,2],[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-//
-//		app/*@START_MENU_TOKEN@*/.buttons["Нет"]/*[[".buttons.containing(.staticText, identifier: \"Нет\")",".otherElements.buttons[\"Нет\"]",".buttons[\"Нет\"]"],[[[-1,2],[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-//		
-//	}
 
 	func testYesButton() {
 		sleep(3)
 		let firstPoster = app.images["Poster"]
-//		XCTAssertTrue(firstPoster.exists)
 		let firstPosterData = firstPoster.screenshot().pngRepresentation
 		app.buttons["Yes"].tap()
 		sleep(3)
 		let secondPoster = app.images["Poster"]
-//		XCTAssertTrue(secondPoster.exists)
 		let secondPosterData = secondPoster.screenshot().pngRepresentation
-//		XCTAssertFalse(firstPoster == secondPoster)
 		XCTAssertFalse(firstPosterData == secondPosterData)
 		let indexLabel = app.staticTexts["Index"]
 		XCTAssertEqual(indexLabel.label, "2/10")
@@ -56,14 +37,11 @@ final class MovieQuizUITests: XCTestCase {
 	func testNoButton() {
 		sleep(3)
 		let firstPoster = app.images["Poster"]
-//		XCTAssertTrue(firstPoster.exists)
 		let firstPosterData = firstPoster.screenshot().pngRepresentation
 		app.buttons["No"].tap()
 		sleep(3)
 		let secondPoster = app.images["Poster"]
-//		XCTAssertTrue(secondPoster.exists)
 		let secondPosterData = secondPoster.screenshot().pngRepresentation
-//		XCTAssertFalse(firstPoster == secondPoster)
 		XCTAssertFalse(firstPosterData == secondPosterData)
 		let indexLabel = app.staticTexts["Index"]
 		XCTAssertEqual(indexLabel.label, "2/10")
