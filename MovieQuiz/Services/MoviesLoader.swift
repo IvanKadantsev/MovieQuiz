@@ -41,9 +41,6 @@ class MoviesLoader: MoviesLoading {
 	init(networkClient: NetworkRouting = NetworkClient()) {
 		self.networkClient = networkClient
 	}
-//	private var currentTask: URLSessionDataTask?
-//	private var currentTaskId: Int?
-//	URL(string: "https://tv-api.com/en/API/Top250Movies/k_zcuw1ytf")
 	
 	private var mostPopularMoviesUrl: URL {
 		guard let url = URL(string: "https://tv-api.com/en/API/Top250Movies/k_zcuw1ytf") else {
