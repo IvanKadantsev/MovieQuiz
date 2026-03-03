@@ -53,7 +53,6 @@ final class QuestionFactory: QuestionFactoryProtocol {
 					imageData = try Data(contentsOf: resizedImageURL)
 				} catch {
 					print("Failed to load image: \(error)")
-					// Можно использовать заглушку: imageData = UIImage(named: "placeholder")?.pngData() ?? Data()
 				}
 			}
 			
@@ -70,46 +69,6 @@ final class QuestionFactory: QuestionFactoryProtocol {
 		}
 	}
 	
-//	func requestNextQuestion() {
-//		DispatchQueue.global().async { [weak self] in
-//			guard let self = self else { return }
-//			let index = (0..<self.movies.count).randomElement() ?? 0
-//			
-//			
-//			guard self.movies.indices.contains(index) else {
-//				print("Index \(index) is invalid")
-//				return
-//			}
-//
-//			let movie = self.movies[index]
-//			
-//			var imageData = Data()
-//			if let resizedImageURL = movie.resizedImageURL {
-//				do {
-//					imageData = try Data(contentsOf: resizedImageURL)
-//				} catch {
-//					print("Failed to load image from URL: \(resizedImageURL), error: \(error)")
-//				}
-//			} else {
-//				print("Movie has no image URL")
-//			}
-//			
-//			let rating = Float(movie.rating) ?? 0
-//			
-//			let text = "Рейтинг этого фильма больше чем 7?"
-//			let correctAnswer = rating > 7
-//			
-//			
-//			let question = QuizQuestion(image: imageData,
-//								  text: text,
-//								  correctAnswer: correctAnswer)
-//			
-//			DispatchQueue.main.async { [weak self] in
-//				guard let self = self else { return }
-//				self.delegate?.didReceiveNextQuestion(question: question)
-//			}
-//		}
-//	}
 }
 
 

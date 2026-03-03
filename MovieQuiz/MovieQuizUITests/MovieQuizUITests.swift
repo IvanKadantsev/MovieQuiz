@@ -17,20 +17,9 @@ final class MovieQuizUITests: XCTestCase {
 
     override func tearDownWithError() throws {
 		try super.tearDownWithError()
-		
-//		app.terminate()
 		app = nil
     }
 	
-//	func testScreenCast() throws {
-//		let app = XCUIApplication()
-//
-//		app.activate()
-//		app/*@START_MENU_TOKEN@*/.buttons["Да"]/*[[".buttons.containing(.staticText, identifier: \"Да\")",".otherElements.buttons[\"Да\"]",".buttons[\"Да\"]"],[[[-1,2],[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-//
-//		app/*@START_MENU_TOKEN@*/.buttons["Нет"]/*[[".buttons.containing(.staticText, identifier: \"Нет\")",".otherElements.buttons[\"Нет\"]",".buttons[\"Нет\"]"],[[[-1,2],[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-//		
-//	}
 
 	func testYesButton() {
 		sleep(3)

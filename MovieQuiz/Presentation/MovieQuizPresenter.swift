@@ -1,5 +1,4 @@
 import Foundation
-import UIKit
 
 struct QuizStepViewModel {
 	let image: Data
@@ -13,17 +12,23 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
 	private var currentQuestionIndex: Int = 0
 	var currentQuestion: QuizQuestion?
 	weak var viewController: MovieQuizViewController?
-	private var questionFactory: QuestionFactoryProtocol?
+	var questionFactory: QuestionFactoryProtocol?
 	var correctAnswers: Int = 0
 	
+//	init(viewController: MovieQuizViewController) {
+//		self.viewController = viewController
+//		
+//		questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
+//		questionFactory?.loadData()
+//		viewController.showLoadingIndicator()
+//	}
 	init(viewController: MovieQuizViewController) {
 		self.viewController = viewController
-		
 		questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
 		questionFactory?.loadData()
+		// Безопасный вызов — не вызовет краш, если viewController не готов
 		viewController.showLoadingIndicator()
 	}
-
 	
 	func yesButtonClicked() {
 		didAnswer(isYes: true)
@@ -34,12 +39,23 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
 	}
 	
 	private func didAnswer(isYes: Bool) {
-		guard let currentQuestion = currentQuestion else {
-			return
-		}
-		let givenAnswer = isYes
-		viewController?.showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
-	}
+		 guard let currentQuestion = currentQuestion else { return }
+		 let isCorrect = isYes == currentQuestion.correctAnswer
+
+		 viewController?.setButtonsEnabled(false)
+
+		 if isCorrect {
+			 correctAnswers += 1
+		 }
+
+		 viewController?.highlightImageBorder(isCorrectAnswer: isCorrect)
+
+
+		 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+			 guard let self = self else { return }
+			 self.showNextQuestionOrResult()
+		 }
+	 }
 
 		func didLoadDataFromServer() {
 			viewController?.hideLoadingIndicator()
@@ -61,6 +77,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
 			let viewModel = convert(model: question)
 			DispatchQueue.main.async { [weak self] in
 				self?.viewController?.show(quiz: viewModel)
+				self?.viewController?.setButtonsEnabled(true)
 			}
 
 		}
@@ -89,17 +106,6 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
 		currentQuestionIndex += 1
 	}
 	
-//	func didReceiveNextQuestion(question: QuizQuestion?) {
-//		guard let question = question else {
-//			return
-//		}
-//		currentQuestion = question
-//		let viewModel = convert(model: question)
-//		DispatchQueue.main.async { [weak self] in
-//			self?.viewController?.show(quiz: viewModel)
-//		}
-//	}
-	
 	func showNextQuestionOrResult() {
 		if isLastQuestion() {
 			let viewModel = QuizResultsViewModel(
@@ -108,13 +114,13 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
 				buttonText: "Сыграть еще раз")
 			viewController?.statisticService.store(correct: correctAnswers, total: questionsAmount)
 			self.correctAnswers = 0
-			restartGame()
 			viewController?.showResult(quiz: viewModel)
 		} else {
-			self.switchToNextQuestion()
+			switchToNextQuestion()
 			questionFactory?.requestNextQuestion()
 		}
 	}
+
 }
 
 

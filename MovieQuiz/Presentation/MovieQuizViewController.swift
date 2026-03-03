@@ -1,6 +1,6 @@
 import UIKit
 
-final class MovieQuizViewController: UIViewController/*, QuestionFactoryDelegate*/ {
+class MovieQuizViewController: UIViewController, MovieQuizControllerProtocol {
 	
 	// MARK: - Lifecycle
 	
@@ -14,8 +14,6 @@ final class MovieQuizViewController: UIViewController/*, QuestionFactoryDelegate
 	
 	private var presenter: MovieQuizPresenter!
 
-	private var currentQuestion: QuizQuestion?
-	
 	private var alertPresenter = AlertPresenter()
 	private var quizResultPresenter: QuizResultProtocol
 
@@ -34,13 +32,23 @@ final class MovieQuizViewController: UIViewController/*, QuestionFactoryDelegate
 		super.init(coder: coder)
 	}
 
+//	override func viewDidLoad() {
+//		super.viewDidLoad()
+//		
+//		presenter = MovieQuizPresenter(viewController: self)
+////		presenter.viewController = self
+//		imageView.layer.cornerRadius = 20
+//		statisticService = StatisticService()
+//		showLoadingIndicator()
+//	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		presenter = MovieQuizPresenter(viewController: self)
-		presenter.viewController = self
+		print("MovieQuizViewController: viewDidLoad called")
 		imageView.layer.cornerRadius = 20
 		statisticService = StatisticService()
+		presenter = MovieQuizPresenter(viewController: self)
+		print("MovieQuizPresenter created and assigned")
 		showLoadingIndicator()
 	}
 	
@@ -63,6 +71,11 @@ final class MovieQuizViewController: UIViewController/*, QuestionFactoryDelegate
 	}
 
 	
+	func setButtonsEnabled(_ enabled: Bool) {
+	 noButton.isEnabled = enabled
+	 yesButton.isEnabled = enabled
+	}
+	
 	func hideLoadingIndicator() {
 		activityIndicator.isHidden = true
 	}
@@ -83,25 +96,13 @@ final class MovieQuizViewController: UIViewController/*, QuestionFactoryDelegate
 		presenter.yesButtonClicked()
 	}
 		
-	func showAnswerResult(isCorrect: Bool) {
-		if isCorrect {presenter.correctAnswers += 1}
-		quizResultPresenter.updateCorrectAnswer(count: presenter.correctAnswers)
+	func highlightImageBorder(isCorrectAnswer: Bool) {
 		imageView.layer.masksToBounds = true
 		imageView.layer.borderWidth = 8
-		imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
-		imageView.layer.cornerRadius = 20
-		noButton.isEnabled = false
-		yesButton.isEnabled = false
-		
-		DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-			guard let self = self else {return}
-			self.noButton.isEnabled = true
-			self.yesButton.isEnabled = true
-			presenter.showNextQuestionOrResult()
-		}
-		
+		imageView.layer.borderColor = isCorrectAnswer ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
 	}
-		
+
+	
 	func showResult(quiz result: QuizResultsViewModel) {
 		let message = quizResultPresenter.makeResultsMessage()
 		let model = AlertModel(
